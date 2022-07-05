@@ -9,8 +9,10 @@ import java.util.Optional;
 
 @Repository
 public interface TokenRepository extends JpaRepository<Token, Long> {
+    @Query("SELECT t FROM Token WHERE t.consumed = false AND t.survey.id = ?1")
+    Optional<Token> findTokenBySurveyId(long survey_id);
 
-    @Query("SELECT st FROM Token st WHERE st.id = ?1")
+    @Query("SELECT t FROM Token t WHERE t.id = ?1")
     Optional<Token> findTokenById(long id);
 
 }

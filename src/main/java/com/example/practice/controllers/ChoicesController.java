@@ -14,7 +14,7 @@ public class ChoicesController {
     @Autowired
     public ChoicesController (ChoicesService choicesService){this.choicesService = choicesService;}
 
-    @PostMapping(path = "/Question-{id}/newChoice")
+    @PostMapping(path = "/Question/{id}/newChoice")
     public void defineAnswer(@RequestBody Choices choice,
                              @PathVariable("id") Long question_id)
     {

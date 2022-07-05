@@ -23,7 +23,7 @@ public class QuestionController {
         return questionService.getQuestionById(id);
     }
 
-    @PostMapping(path = "/Survey-{id}/newQuestion")
+    @PostMapping(path = "/Survey/{id}/newQuestion")
     public void defineQuestion(@RequestBody Question question,
                                @PathVariable("id") Long survey_id){
         questionService.defineQuestion(question, survey_id);
