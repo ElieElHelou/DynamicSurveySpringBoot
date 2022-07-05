@@ -1,0 +1,8 @@
+--insert into survey (id, title, description)
+--values (3, 'South West branch', '6000000021');
+--insert into question (id, description, survey_id, answer_type)
+--values (1, '1231231231', 3,1),
+--       (2, '1231231232', 3,2),
+--       (3, '1231231233', 3,1),
+--       (4, '1231231234', 3,1),
+--       (5, '1231231235', 3,0);
