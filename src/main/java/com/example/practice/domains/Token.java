@@ -1,13 +1,17 @@
 package com.example.practice.domains;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Entity
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Token {
     @Id
     @SequenceGenerator(
@@ -26,7 +30,6 @@ public class Token {
     private Timestamp consumed_date;
 
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JsonIgnore(value = true)
     @JsonBackReference
     @JoinColumn(name = "survey_id", referencedColumnName = "id")
     private Survey survey;

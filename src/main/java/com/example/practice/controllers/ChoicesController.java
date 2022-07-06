@@ -5,8 +5,10 @@ import com.example.practice.services.ChoicesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping(path="surveyAPI/v1")
+@RequestMapping(path = "surveyAPI/v1")
 public class ChoicesController {
 
     private final ChoicesService choicesService;
@@ -21,5 +23,7 @@ public class ChoicesController {
         choicesService.defineChoices(choice, question_id);
     }
 
+    @GetMapping(path = "/Question/{id}/choices")
+    public List<Choices> getChoicesList(@PathVariable("id")Long id) {return choicesService.getAllByQuestionId(id);}
 
 }

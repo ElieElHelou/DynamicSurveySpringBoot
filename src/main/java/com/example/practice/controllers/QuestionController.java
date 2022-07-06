@@ -29,7 +29,7 @@ public class QuestionController {
     }
 
     @GetMapping(path="/Survey/{id}/questions")
-    public Optional <List<Question>> getQuestionList(@PathVariable("id") Long id) {
+    public List<Question> getQuestionList(@PathVariable("id") Long id) {
         return questionService.getAllBySurveyId(id);
     }
 

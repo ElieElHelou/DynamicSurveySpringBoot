@@ -1,7 +1,6 @@
 package com.example.practice.domains;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -30,14 +29,12 @@ public class Survey {
 
     private boolean active = true;
 
-//    @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-//    @JsonBackReference
-//    @JsonIgnore(value = true)
-//    private List<Question> questions;
+    @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Question> questions;
 
     @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    @JsonBackReference
-    @JsonIgnore
+    @JsonManagedReference
     private List<Token> tokens;
 
     public Survey(){}
@@ -83,9 +80,9 @@ public class Survey {
         return active;
     }
 
-//    public List<Question> getQuestions() {
-//        return questions;
-//    }
+    public List<Question> getQuestions() {
+        return questions;
+    }
 
     public List<Token> getTokens() {
         return tokens;

@@ -1,7 +1,9 @@
 package com.example.practice.domains;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -9,6 +11,9 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Question {
     @Id
     @SequenceGenerator(
@@ -27,12 +32,12 @@ public class Question {
     private int answer_type;
 
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JsonIgnore(value = true)
     @JsonBackReference
     @JoinColumn(name = "survey_id", referencedColumnName = "id")
     private Survey survey;
 
     @OneToMany(mappedBy = "question")
+    @JsonManagedReference
     private List<Choices> choices = new ArrayList<>();
 
     public Question(){}

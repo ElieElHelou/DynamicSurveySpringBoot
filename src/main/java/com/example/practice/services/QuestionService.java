@@ -29,14 +29,14 @@ public class QuestionService {
     //    multiple select : 2
 
     public void defineQuestion(Question question, long survey_id) {
-        Optional<Question> questionOptional = questionRepository.findById(question.getId());
+        boolean exists = questionRepository.existsById(question.getId());
         Optional<Survey> surveyOptional = surveyRepository.findById(survey_id);
 
         if (surveyOptional.isEmpty()){
             throw new IllegalStateException("Survey does not exist!");
         }
 
-        if (questionOptional.isPresent()){
+        if (exists){
             throw new IllegalStateException("Question already exists!");
         }
 
@@ -46,14 +46,23 @@ public class QuestionService {
     }
 
     public Question getQuestionById(Long id) {
-        Optional<Question> questionOptional = questionRepository.findById(id);
-        if (questionOptional.isEmpty()){
+
+        boolean exists = questionRepository.existsById(id);
+
+        if (!exists){
             throw new IllegalStateException("Question does not exist!");
         }
+
+        Optional<Question> questionOptional = questionRepository.findById(id);
+
         return questionOptional.get();
     }
 
-    public Optional <List<Question>> getAllBySurveyId(Long id) {
-            return questionRepository.findBySurveyId(id);
+    public List<Question> getAllBySurveyId(Long id) {
+        Optional<List<Question>> exists = questionRepository.findAllBySurveyId(id);
+        if (exists.isEmpty()){
+            throw new IllegalStateException("Question does not exist!");
+        }
+            return exists.get();
     }
 }

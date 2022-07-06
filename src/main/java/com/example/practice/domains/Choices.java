@@ -1,11 +1,15 @@
 package com.example.practice.domains;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 
 @Entity
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Choices {
     @Id
     @SequenceGenerator(
@@ -21,7 +25,6 @@ public class Choices {
 
     @ManyToOne
     @JoinColumn(name = "question_id", referencedColumnName = "id")
-    @JsonIgnore(value = true)
     @JsonBackReference
     private Question question;
 
