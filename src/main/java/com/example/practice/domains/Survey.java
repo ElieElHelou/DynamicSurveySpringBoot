@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -72,18 +71,6 @@ public class Survey {
         this.id = id;
     }
 
-//    public String info() {
-//        String infosheet = this.toString();
-//        infosheet = infosheet + "\nQuestions={";
-//        for (Question q : this.questions){
-//            infosheet = infosheet + "\n" + questions.toString();
-//        }
-//
-//        infosheet = infosheet + "}\n}";
-//
-//        return infosheet;
-//    }
-
     public String getDescription() {
         return description;
     }
@@ -91,16 +78,6 @@ public class Survey {
     public Timestamp getCreation_date() {
         return creation_date;
     }
-
-//    @Override
-//    public String toString(){
-//        return "Survey " + this.id+ " {\n" +
-//                "Title='" + this.title + '\'' +
-//                "Description='" + this.description + "'" + "\n" +
-//                "Creation Date=" + this.creation_date +
-//                "Status=" + this.active +
-//                "\n";
-//    }
 
     public boolean isActive() {
         return active;

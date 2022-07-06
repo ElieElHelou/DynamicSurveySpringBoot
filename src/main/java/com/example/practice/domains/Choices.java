@@ -44,16 +44,6 @@ public class Choices {
         this.description = description;
     }
 
-//    @Override
-//    public String toString(){
-//        String display = "Choice " + this.id + " {\n" +
-//                "Description='" + this.description + "\n" +
-//                "Parent Question ID='" + /*this.question.getId()*/ + '\'' + "\n"
-//                + "}";
-//
-//        return display;
-//    }
-
     public long getId() {
         return this.id;
     }

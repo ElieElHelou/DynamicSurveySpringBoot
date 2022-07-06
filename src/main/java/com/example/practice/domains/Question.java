@@ -44,7 +44,6 @@ public class Question {
     }
 
     public Question (String description, int answer_type){
-        this.id = id;
         this.description = description;
         this.answer_type = answer_type;
     }
@@ -65,23 +64,6 @@ public class Question {
     public long getId() {
         return this.id;
     }
-
-//    @Override
-//    public String toString(){
-//        String info = "Question "+ this.id + " {\n" +
-//                "Description='" + this.description + '\'' + "\n" +
-//                "Answer Type=" + this.answer_type + "\n" +
-//                "Parent Survey ID='" + /*this.survey.getId()*/ + '\'' + "\n" +
-//                "Choices={";
-//
-//        for (Choices c : choices){
-//            info = info + "\n" + c.toString();
-//        }
-//
-//        info = info + "}";
-//
-//        return info;
-//    }
 
     public void setMode(int mode) {
         this.answer_type = mode;

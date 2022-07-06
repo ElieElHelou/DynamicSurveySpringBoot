@@ -14,9 +14,9 @@ public class TokenController {
     public TokenController (TokenService tokenService){this.tokenService = tokenService;}
 
     @PostMapping(path = "/Survey/{id}/generatetoken")
-    public void generateToken(@PathVariable("id") long survey_id,@RequestBody String to)
+    public void generateToken(@PathVariable("id") long survey_id)
     {
-        tokenService.generateToken(survey_id, to);
+        tokenService.generateToken(survey_id);
     }
 
     @PostMapping(path = "/Survey/{id}/share")

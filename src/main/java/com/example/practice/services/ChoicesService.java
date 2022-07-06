@@ -4,8 +4,6 @@ import com.example.practice.domains.Choices;
 import com.example.practice.domains.Question;
 import com.example.practice.repositories.ChoicesRepository;
 import com.example.practice.repositories.QuestionRepository;
-import com.example.practice.repositories.SurveyRepository;
-import com.example.practice.repositories.TokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +25,7 @@ public class ChoicesService {
     public void defineChoices(Choices choice, long question_id){
         Optional<Question> questionOptional = questionRepository.findById(question_id);
         Optional<Choices> choiceOptional = choicesRepository.findChoiceById(choice.getId());
-        if (!questionOptional.isPresent()){
+        if (questionOptional.isEmpty()){
             throw new IllegalStateException("Question does not exist!");
         }
 

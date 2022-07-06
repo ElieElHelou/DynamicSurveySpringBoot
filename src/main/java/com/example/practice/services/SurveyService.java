@@ -1,11 +1,6 @@
 package com.example.practice.services;
 
-import com.example.practice.repositories.ChoicesRepository;
-import com.example.practice.repositories.QuestionRepository;
 import com.example.practice.repositories.SurveyRepository;
-import com.example.practice.repositories.TokenRepository;
-import com.example.practice.domains.Choices;
-import com.example.practice.domains.Question;
 import com.example.practice.domains.Survey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,16 +26,6 @@ public class SurveyService {
         surveyRepository.save(survey);
     }
 
-//    public String getInfoById(Long id) {
-//        Optional<Survey> surveyOptional = surveyRepository.findById(id);
-//
-//        if (!surveyOptional.isPresent()){
-//            throw new IllegalStateException("Survey does not exist!");
-//        }
-//
-//        return surveyOptional.get().info();
-//    }
-
     public List<Survey> getSurveyList (){
       return surveyRepository.findAll();
 
@@ -48,7 +33,7 @@ public class SurveyService {
 
     public Survey getSurveyById(Long id) {
         Optional<Survey> surveyOptional = surveyRepository.findById(id);
-        if (!surveyOptional.isPresent()){
+        if (surveyOptional.isEmpty()){
             throw new IllegalStateException("Survey does not exist!");
         }
         return surveyOptional.get();

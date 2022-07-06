@@ -33,11 +33,11 @@ public class Token {
 
     public Token(){}
 
-//    public Token(long id, Survey survey){
-//        this.id = id;
-//        this.survey = survey;
-//        this.creation_date = Timestamp.valueOf(LocalDateTime.now());
-//    }
+    public Token(long id, Survey survey){
+        this.id = id;
+        this.survey = survey;
+        this.creation_date = Timestamp.valueOf(LocalDateTime.now());
+    }
 
     public Token(Survey survey){
         this.survey = survey;

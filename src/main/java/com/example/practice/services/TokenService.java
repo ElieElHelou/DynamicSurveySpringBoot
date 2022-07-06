@@ -15,7 +15,7 @@ import java.util.Optional;
 public class TokenService {
 
     private final TokenRepository tokenRepository;
-    private JavaMailSender emailSender;
+    private final JavaMailSender emailSender;
     private final SurveyRepository surveyRepository;
 
     @Autowired
@@ -25,9 +25,9 @@ public class TokenService {
         this.emailSender = emailSender;
     }
 
-    public void generateToken(long survey_id, String to) {
+    public void generateToken(long survey_id) {
         Optional<Survey> surveyOptional = surveyRepository.findById(survey_id);
-        if (!surveyOptional.isPresent()){
+        if (surveyOptional.isEmpty()){
             throw new IllegalStateException("Survey does not exist!");
         }
 
@@ -38,14 +38,14 @@ public class TokenService {
     public void sendToken(long survey_id,
                 String to) {
         Optional<Survey> surveyOptional = surveyRepository.findById(survey_id);
-        if (!surveyOptional.isPresent()){
+        if (surveyOptional.isEmpty()){
             throw new IllegalStateException("Survey does not exist!");
         }
 
         String title = surveyOptional.get().getTitle();
 
         Optional<Token> tokenOptional = tokenRepository.findTokenBySurveyId(survey_id);
-        if (!tokenOptional.isPresent()){
+        if (tokenOptional.isEmpty()){
             throw new IllegalStateException("No token pointing to this survey exist!");
         }
 

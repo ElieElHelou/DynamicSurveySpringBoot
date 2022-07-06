@@ -1,6 +1,5 @@
 package com.example.practice.controllers;
 
-import com.example.practice.domains.Question;
 import com.example.practice.domains.Survey;
 import com.example.practice.services.SurveyService;
 import org.springframework.beans.factory.annotation.Autowired;

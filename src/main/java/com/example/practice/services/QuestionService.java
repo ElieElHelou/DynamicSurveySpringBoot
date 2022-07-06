@@ -4,7 +4,6 @@ import com.example.practice.domains.Question;
 import com.example.practice.domains.Survey;
 import com.example.practice.repositories.QuestionRepository;
 import com.example.practice.repositories.SurveyRepository;
-import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +32,7 @@ public class QuestionService {
         Optional<Question> questionOptional = questionRepository.findById(question.getId());
         Optional<Survey> surveyOptional = surveyRepository.findById(survey_id);
 
-        if (!surveyOptional.isPresent()){
+        if (surveyOptional.isEmpty()){
             throw new IllegalStateException("Survey does not exist!");
         }
 
@@ -48,7 +47,7 @@ public class QuestionService {
 
     public Question getQuestionById(Long id) {
         Optional<Question> questionOptional = questionRepository.findById(id);
-        if (!questionOptional.isPresent()){
+        if (questionOptional.isEmpty()){
             throw new IllegalStateException("Question does not exist!");
         }
         return questionOptional.get();

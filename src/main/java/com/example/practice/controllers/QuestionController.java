@@ -1,7 +1,6 @@
 package com.example.practice.controllers;
 
 import com.example.practice.domains.Question;
-import com.example.practice.domains.Survey;
 import com.example.practice.services.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
