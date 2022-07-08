@@ -1,6 +1,5 @@
 package com.example.practice.services;
 
-import com.example.practice.domains.Question;
 import com.example.practice.repositories.SurveyRepository;
 import com.example.practice.domains.Survey;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,30 +11,21 @@ import java.util.Optional;
 @Service
 public class SurveyService {
 
-    private final SurveyRepository surveyRepository;
-
     @Autowired
-    public SurveyService(SurveyRepository surveyRepository){
-        this.surveyRepository = surveyRepository;
-    }
+    private SurveyRepository surveyRepository;
+    public SurveyService(){};
 
     public void createSurvey(Survey survey) {
         boolean exists = surveyRepository.existsById(survey.getId());
-        if (exists){
-            throw new IllegalStateException("Survey already exists");
-        }
+        if (exists)throw new IllegalStateException("Survey already exists");
         surveyRepository.save(survey);
     }
 
-    public List<Survey> getSurveyList (){
-      return surveyRepository.findAll();
-    }
+    public List<Survey> getSurveyList (){return surveyRepository.findAll();}
 
     public Survey getSurveyById(Long id) {
         boolean exists = surveyRepository.existsById(id);
-        if (!exists){
-            throw new IllegalStateException("Survey does not exist!");
-        }
+        if (!exists) throw new IllegalStateException("Survey does not exist!");
         Optional<Survey> surveyOptional = surveyRepository.findById(id);
         return surveyOptional.get();
     }

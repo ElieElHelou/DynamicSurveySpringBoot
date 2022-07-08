@@ -8,22 +8,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "surveyAPI/v1")
+@RequestMapping(path = "v1/choices")
 public class ChoicesController {
-
-    private final ChoicesService choicesService;
-
     @Autowired
-    public ChoicesController (ChoicesService choicesService){this.choicesService = choicesService;}
-
-    @PostMapping(path = "/Question/{id}/newChoice")
-    public void defineAnswer(@RequestBody Choices choice,
-                             @PathVariable("id") Long question_id)
-    {
-        choicesService.defineChoices(choice, question_id);
-    }
-
-    @GetMapping(path = "/Question/{id}/choices")
+    private ChoicesService choicesService;
+    public ChoicesController (){}
+    @PostMapping(path = "")
+    public void defineAnswer(@RequestBody Choices choice) {choicesService.defineChoices(choice);}
+    @GetMapping(path = "/{id}")
+    public Choices getChoiceById(@PathVariable("id")Long id){return choicesService.getChoiceById(id);}
+    @GetMapping(path = "/question/{id}")
     public List<Choices> getChoicesList(@PathVariable("id")Long id) {return choicesService.getAllByQuestionId(id);}
-
 }

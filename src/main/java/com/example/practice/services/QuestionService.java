@@ -13,56 +13,39 @@ import java.util.Optional;
 @Service
 public class QuestionService {
 
-    private final QuestionRepository questionRepository;
-
-    private final SurveyRepository surveyRepository;
+    @Autowired
+    private QuestionRepository questionRepository;
 
     @Autowired
-    public QuestionService(SurveyRepository surveyRepository,
-                         QuestionRepository questionRepository){
-        this.surveyRepository = surveyRepository;
-        this.questionRepository = questionRepository;
-    }
+    private SurveyRepository surveyRepository;
+
+    public QuestionService(){}
 
     //    free entry : 0
     //    single select : 1
     //    multiple select : 2
 
-    public void defineQuestion(Question question, long survey_id) {
-        boolean exists = questionRepository.existsById(question.getId());
-        Optional<Survey> surveyOptional = surveyRepository.findById(survey_id);
-
-        if (surveyOptional.isEmpty()){
-            throw new IllegalStateException("Survey does not exist!");
+    public void defineQuestion(Question question) {
+        if (question != null) {
+            boolean exists = questionRepository.existsById(question.getId());
+            Optional<Survey> surveyOptional = surveyRepository.findById(question.getSurvey_id());
+            if (surveyOptional.isEmpty()) throw new IllegalStateException("Survey does not exist!");
+            if (exists) throw new IllegalStateException("Question already exists!");
+            Question entity = new Question(question.getId(), question.getDescription(), question.getMode(), surveyOptional.get());
+            questionRepository.save(entity);
         }
-
-        if (exists){
-            throw new IllegalStateException("Question already exists!");
-        }
-
-        Question entity = new Question(question.getId(), question.getDescription(), question.getMode(),surveyOptional.get());
-
-        questionRepository.save(entity);
+        else throw new IllegalStateException("Data transfer error!");
     }
 
     public Question getQuestionById(Long id) {
-
-        boolean exists = questionRepository.existsById(id);
-
-        if (!exists){
-            throw new IllegalStateException("Question does not exist!");
-        }
-
-        Optional<Question> questionOptional = questionRepository.findById(id);
-
-        return questionOptional.get();
+        Optional<Question> exists = questionRepository.findById(id);
+        if (exists.isEmpty()) throw new IllegalStateException("Question does not exist!");
+        return exists.get();
     }
 
     public List<Question> getAllBySurveyId(Long id) {
         Optional<List<Question>> exists = questionRepository.findAllBySurveyId(id);
-        if (exists.isEmpty()){
-            throw new IllegalStateException("Question does not exist!");
-        }
-            return exists.get();
+        if (exists.isEmpty()) throw new IllegalStateException("Question does not exist!");
+        return exists.get();
     }
 }

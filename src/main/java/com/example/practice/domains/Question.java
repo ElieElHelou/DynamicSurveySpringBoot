@@ -33,8 +33,11 @@ public class Question {
 
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JsonBackReference
-    @JoinColumn(name = "survey_id", referencedColumnName = "id")
+    @JoinColumn(name = "survey_id", referencedColumnName = "id", updatable = false, insertable = false)
     private Survey survey;
+
+    @Column(name = "survey_id")
+    private Long survey_id;
 
     @OneToMany(mappedBy = "question")
     @JsonManagedReference
@@ -96,5 +99,13 @@ public class Question {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Long getSurvey_id() {
+        return survey_id;
+    }
+
+    public void setSurvey_id(Long survey_id) {
+        this.survey_id = survey_id;
     }
 }

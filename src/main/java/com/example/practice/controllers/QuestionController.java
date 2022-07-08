@@ -6,29 +6,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@RequestMapping(path="surveyAPI/v1")
+@RequestMapping(path="v1/questions")
 public class QuestionController {
-
-    private final QuestionService questionService;
-
     @Autowired
-    public QuestionController (QuestionService questionService){this.questionService = questionService;}
-
-    @GetMapping(path = "/Question/{id}")
+    private QuestionService questionService;
+    public QuestionController (){}
+    @GetMapping(path = "/{id}")
     public Question getQuestionById(@PathVariable("id")Long id){
         return questionService.getQuestionById(id);
     }
-
-    @PostMapping(path = "/Survey/{id}/newQuestion")
-    public void defineQuestion(@RequestBody Question question,
-                               @PathVariable("id") Long survey_id){
-        questionService.defineQuestion(question, survey_id);
-    }
-
-    @GetMapping(path="/Survey/{id}/questions")
+    @PostMapping(path = "")
+    public void defineQuestion(@RequestBody Question question){questionService.defineQuestion(question);}
+    @GetMapping(path="/survey/{id}")
     public List<Question> getQuestionList(@PathVariable("id") Long id) {
         return questionService.getAllBySurveyId(id);
     }

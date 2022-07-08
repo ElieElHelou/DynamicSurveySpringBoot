@@ -24,9 +24,12 @@ public class Choices {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "question_id", referencedColumnName = "id")
+    @JoinColumn(name = "question_id", referencedColumnName = "id", updatable = false, insertable = false)
     @JsonBackReference
     private Question question;
+
+    @Column(name = "question_id")
+    private Long question_id;
 
     private String description;
 
@@ -65,5 +68,13 @@ public class Choices {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Long getQuestion_id() {
+        return question_id;
+    }
+
+    public void setQuestion_id(Long question_id) {
+        this.question_id = question_id;
     }
 }

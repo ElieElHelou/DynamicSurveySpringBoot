@@ -13,41 +13,35 @@ import java.util.Optional;
 @Service
 public class ChoicesService {
 
-    private final QuestionRepository questionRepository;
-    private final ChoicesRepository choicesRepository;
-
     @Autowired
-    public ChoicesService(QuestionRepository questionRepository,
-                         ChoicesRepository choicesRepository){
-        this.questionRepository = questionRepository;
-        this.choicesRepository = choicesRepository;
+    private QuestionRepository questionRepository;
+    @Autowired
+    private ChoicesRepository choicesRepository;
+
+    public ChoicesService(){}
+
+    public void defineChoices(Choices choice){
+        if (choice != null){
+            Optional <Question> questionOptional = questionRepository.findById(choice.getQuestion_id());
+            boolean exists = choicesRepository.existsById(choice.getId());
+            if (questionOptional.isEmpty())throw new IllegalStateException("Question does not exist!");
+            if (questionOptional.get().getMode() == 0)throw new IllegalStateException("Question with free answer selection mode cannot have predetermined answers!");
+            if (exists)throw new IllegalStateException("Choice already exists!");
+            Choices entity = new Choices(choice.getId(), choice.getDescription(),questionOptional.get());
+            choicesRepository.save(entity);
+        }
+        else throw new RuntimeException("Data transfer error!");
     }
-
-    public void defineChoices(Choices choice, long question_id){
-        Optional <Question> questionOptional = questionRepository.findById(question_id);
-        boolean exists = choicesRepository.existsById(choice.getId());
-        if (questionOptional.isEmpty()){
-            throw new IllegalStateException("Question does not exist!");
-        }
-
-        if (questionOptional.get().getMode() == 0){
-            throw new IllegalStateException("Question with free answer selection mode cannot have predetermined answers!");
-        }
-
-        if (exists){
-            throw new IllegalStateException("Choice already exists!");
-        }
-
-        Choices entity = new Choices(choice.getId(), choice.getDescription(),questionOptional.get());
-
-        choicesRepository.save(entity);
-    }
-
     public List<Choices> getAllByQuestionId(Long id) {
+        if (id == null) throw new RuntimeException("Error! Received null Id!");
         Optional<List<Choices>> exists = choicesRepository.getChoicesByQuestionId(id);
-        if (exists.isEmpty()) {
-            throw new IllegalStateException("Question does not exist!");
-        }
+        if (exists.isEmpty()) throw new IllegalStateException("Question does not exist!");
+        return exists.get();
+    }
+    public Choices getChoiceById(Long id) {
+        if (id == null) throw new RuntimeException("Error! Received null Id!");
+        Optional<Choices> exists = choicesRepository.findById(id);
+        if (exists.isEmpty()) throw new IllegalStateException("Question does not exist!");
         return exists.get();
     }
 }

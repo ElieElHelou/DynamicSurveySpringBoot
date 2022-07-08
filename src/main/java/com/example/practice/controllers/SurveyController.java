@@ -8,31 +8,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path="surveyAPI/v1")
+@RequestMapping(path="v1/surveys")
 public class SurveyController {
-
-    private final SurveyService surveyService;
-
     @Autowired
-    public SurveyController (SurveyService surveyService){
-        this.surveyService = surveyService;
-    }
-
-    @GetMapping(path = "/Survey/{id}")
-    public Survey getSurveyById(@PathVariable("id")Long id){
-        return surveyService.getSurveyById(id);
-    }
-
-    @PostMapping(path = "/newSurvey")
-    public void createSurvey(@RequestBody Survey survey){
-        surveyService.createSurvey(survey);
-    }
-
-
-    @GetMapping(path="/surveys")
-    public List<Survey> getSurveyList() {
-        return surveyService.getSurveyList();
-    }
-
-
+    private SurveyService surveyService;
+    public SurveyController (){}
+    @GetMapping(path = "/{id}")
+    public Survey getSurveyById(@PathVariable("id")Long id){return surveyService.getSurveyById(id);}
+    @PostMapping(path = "/{id}")
+    public void createSurvey(@RequestBody Survey survey){surveyService.createSurvey(survey);}
+    @GetMapping(path="")
+    public List<Survey> getSurveyList() {return surveyService.getSurveyList();}
 }
